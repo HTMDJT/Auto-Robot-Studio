@@ -1,0 +1,19 @@
+version: '3'
+services:
+  yolo11:
+    image: yolo11-baseimage:latest
+    container_name: yolo11-container
+    environment:
+      - DISPLAY=$DISPLAY # 设置环境变量
+      - PYTHONUNBUFFERED=1 # 使python程序直接打印到终端而不是堆在缓冲区
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix # 为了支持图形化所做的挂载（这个挂载很重要）
+      - .:/ultralytics # 工作目录挂载(~/dockerlearn/workdir:/home/summer/opencv)
+    network_mode: host
+    pid: "host"      # 添加 pid 命名空间共享
+    ipc: "host"      # 添加 ipc 命名空间共享    
+    privileged: true
+    stdin_open: true
+    tty: true
+    working_dir: "/ultralytics" 
+
